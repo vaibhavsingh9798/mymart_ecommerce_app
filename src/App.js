@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Product from './components/Product/Product';
 import Footer from './components/Footer/Footer';
+import Cart from './components/Cart/Cart';
 
 
 function App() {
@@ -14,12 +15,13 @@ function App() {
       <Row>
         <Col>
           <Header />
+        
         </Col>
       </Row>
     </header>
     
     <main>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-center">
         <Col>
            <Product />
         </Col>

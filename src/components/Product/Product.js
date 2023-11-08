@@ -1,5 +1,5 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
-
+import './Product.css'
 const Product = () =>{
     const products = [
         {
@@ -25,11 +25,11 @@ const Product = () =>{
         ]
 
         const printProduct = ()=>{
-           return ( <Container>
+           return ( <Container className="products" style={{ width: '60%' }}>
                 <Row className="justify-content-center">
                     <h3 className="fw-bold text-center mt-4">Product</h3>
                 {products.map((product,ind) =>  (
-                    <Col key={ind} sm={6} md={6} lg={6}   className="text-center mt-5">
+                    <Col key={ind} sm={6} md={6} lg={6}   className="text-center mt-5" >
                     <div className="product-card">
                       <h5>{product.title}</h5>
                       <img src={product.imageUrl} alt={product.title} className="img-fluid"/>

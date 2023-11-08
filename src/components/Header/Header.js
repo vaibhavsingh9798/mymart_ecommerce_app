@@ -1,6 +1,10 @@
 import { Container, Nav, Navbar , Badge, Button} from "react-bootstrap";
 import  styles from './Header.module.css'
+import { useState } from "react";
+import Cart from "../Cart/Cart";
+
 const Header = () =>{
+        const [showCart,setShowCart] = useState(false)
     return(
         <>
        
@@ -14,7 +18,7 @@ const Header = () =>{
         <Nav className="ml-auto">
           <Nav.Link href="#cart">
           
-            <Button className="border">cart</Button>
+            <Button  onClick={() => setShowCart(!showCart)} className="border">cart</Button>
             <Badge pill variant="danger" className={styles.count}>{0}</Badge>
            
             </Nav.Link>
@@ -25,7 +29,7 @@ const Header = () =>{
      <header className={styles.header}>
         <h1 >My Mart</h1>
       </header>
-   
+         {showCart && <Cart />}
         </>
     )
 }

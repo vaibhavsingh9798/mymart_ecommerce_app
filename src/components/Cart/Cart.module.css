@@ -1,0 +1,30 @@
+.cartPage{
+    width: 25%;
+    right: 0;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background-color: whitesmoke;
+    border: 1px black solid;
+    margin-top: 4rem;
+   
+  /* transition: transform 0.3s ease-in-out; */
+}
+
+.closeBtn{
+   display: flex;
+   justify-content: flex-end;
+    margin: 1.5rem 1.5rem 0 0;
+   
+}
+.price{
+    display: flex;
+    justify-content: flex-end;
+    margin: 2rem;
+}
+
+.buyBtn{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
