@@ -1,0 +1,22 @@
+.header{
+    font-weight: bold;
+ margin-top: 4.5rem;
+ padding: 4rem;
+ background-color: lightslategray;
+ text-align: center;
+ width: 100%;
+ color: whitesmoke;
+}
+
+.header h1{
+    font-weight: bold;
+}
+
+.count{
+    position: absolute;
+ 
+  font-size: 1rem;
+}
+
+
+
