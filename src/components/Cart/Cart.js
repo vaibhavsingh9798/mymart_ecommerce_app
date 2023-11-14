@@ -1,6 +1,9 @@
 import {  Button, CloseButton,   Table } from 'react-bootstrap';
 import styles from './Cart.module.css'
+import { useContext } from 'react';
+import CartContext from '../Store/Cart-auth';
 const Cart = () =>{
+   let cartCtx =  useContext(CartContext)
     const cartElements = [
         {
         title: 'Colors',
@@ -38,7 +41,7 @@ const Cart = () =>{
                </thead>
                <tbody>
                {
-                cartElements.map((item,ind)=>(
+                cartCtx.cartItem.map((item,ind)=>(
                   <tr key={ind} className='text-center'>
                     <td>{item.title}</td>
                     <td>{item.price}</td>
@@ -48,7 +51,7 @@ const Cart = () =>{
                }
                </tbody>
              </Table>
-             <h4 className={styles.price}>Total Rs {0}</h4>
+             <h4 className={styles.price}>Total &#x20B9; {cartCtx.totalAmount}</h4>
              <div className={styles.buyBtn}>
              <Button className='bg-info mt-2'>PURCHASE</Button>
              </div>
@@ -58,3 +61,4 @@ const Cart = () =>{
 }
 
 export default Cart;
+

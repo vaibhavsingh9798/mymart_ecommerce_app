@@ -8,7 +8,7 @@ const Header = () =>{
     return(
         <>
        
-       <Navbar bg="primary" variant="dark" expand="lg" fixed="top" fluid>
+       <Navbar bg="primary" variant="dark" expand="lg" fixed="top" fluid >
        <Container>
         <Nav className="mx-auto">
           <Nav.Link href="#home" className="fs-5 ">HOME</Nav.Link>

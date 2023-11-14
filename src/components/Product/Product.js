@@ -1,29 +1,17 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import './Product.css'
-const Product = () =>{
-    const products = [
-        {
-        title: 'Colors',
-        price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-        },
-        {
-        title: 'Black and white Colors',
-        price: 50,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-        },
-        {
-        title: 'Yellow and Black Colors',
-        price: 70,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-        },
-        {
-        title: 'Blue Color',
-        price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-        }
-        ]
+import products from '../../assets/products'
+import { useContext } from "react"
+import CartContext from "../Store/Cart-auth"
 
+const Product = () =>{
+    
+    const cartCtx = useContext(CartContext)
+    const handleAdd = (event,item)=>{
+        event.preventDefault()
+        cartCtx.addToCart(item)
+       console.log('it',item)
+    }
         const printProduct = ()=>{
            return ( <Container className="products" style={{ width: '60%' }}>
                 <Row className="justify-content-center">
@@ -35,7 +23,7 @@ const Product = () =>{
                       <img src={product.imageUrl} alt={product.title} className="img-fluid"/>
                          <Row className=" mt-4">
                         <Col> <p>Rs {product.price}</p></Col>
-                        <Col><Button className="w-10">Add to Cart</Button></Col>
+                        <Col><Button onClick={(event) => handleAdd(event,product)} className="w-10">Add to Cart</Button></Col>
                        </Row>
                     </div>
                     </Col>
