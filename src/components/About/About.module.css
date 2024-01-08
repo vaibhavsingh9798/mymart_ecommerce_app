@@ -1,0 +1,9 @@
+.img{
+    height: 25rem;
+    width: 25rem;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+     margin-left: -15rem;
+     margin-top: 0rem;
+}

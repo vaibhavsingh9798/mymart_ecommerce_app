@@ -7,10 +7,11 @@ import CartContext from "../Store/Cart-auth"
 const Product = () =>{
     
     const cartCtx = useContext(CartContext)
+
     const handleAdd = (event,item)=>{
         event.preventDefault()
         cartCtx.addToCart(item)
-       console.log('it',item)
+       
     }
         const printProduct = ()=>{
            return ( <Container className="products" style={{ width: '60%' }}>

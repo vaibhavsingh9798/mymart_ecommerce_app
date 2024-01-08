@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CartContext from "./Cart-auth";
 
-
 const CartContextProvider = (props) =>{
 
     const [cartItem,setCartItem] = useState([])
