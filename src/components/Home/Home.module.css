@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   flex-direction: column;
+    width: 100%;
+}
+
+
+.items{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* background-color: aqua; */
+    border-bottom: 1px solid black;
+}
+
+.item{
+   display: flex;
+   justify-content: space-between;
+   margin: 1rem;
+   padding:  2rem;
+   width: 100%;
+  
+}
