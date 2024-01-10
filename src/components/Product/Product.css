@@ -4,3 +4,8 @@
      width: 80%; 
     text-align: center;
 }
+
+h3{
+    display: flex;
+    justify-content: center;
+}

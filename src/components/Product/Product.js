@@ -1,12 +1,11 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import './Product.css'
-// import products from '../../assets/products'
 import { useContext, useState, useEffect } from "react"
 import CartContext from "../Store/Cart-auth"
 
 const Product = () =>{
   const [products,setProducts] = useState([])
-
+  const [loading,setLoading] = useState(true)
  async function fetchProduct(){
     try{
   let response = await  fetch('https://fakestoreapi.com/products')
@@ -22,6 +21,8 @@ const Product = () =>{
      setProducts(transformedItems)
     }catch(err){
         throw new Error(err)
+    }finally{
+      setLoading(false);
     }
    
  }
@@ -57,7 +58,8 @@ const Product = () =>{
 
     return(
         <>
-        {printProduct()}
+        {loading && <h3>Loading...........</h3>}
+        {!loading && printProduct()}
         </>
     )
 }

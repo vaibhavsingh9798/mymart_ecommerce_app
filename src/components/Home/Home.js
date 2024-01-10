@@ -7,10 +7,6 @@ const Home = () =>{
         { date: 'JAN22', category: 'jewelery', location: 'Mumbai' },
         { date: 'JAN26', category: `Men's Clothing`, location: 'Chennai' },
         { date: 'JAN30', category: `women's clothing`, location: 'Kolkata' },
-        // { date: 'FEB5', category: 'Baby Care', location: 'Bangalore' },
-        // { date: 'FEB8', category: 'Snacks', location: 'Hyderabad' },
-        // { date: 'FEB11', category: 'Grocery', location: 'Pune' },
-        // { date: 'FEB17', category: 'Sweets', location: 'Ahmedabad' },
       ];
 
       function printList(){
