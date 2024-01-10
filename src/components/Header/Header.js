@@ -1,14 +1,15 @@
 import { Container, Nav, Navbar , Badge, Button} from "react-bootstrap";
 import  styles from './Header.module.css'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Cart from "../Cart/Cart";
 import {NavLink} from "react-router-dom";
-
+import CartCtx from "../Store/Cart-auth"
 const Header = () =>{
         const [showCart,setShowCart] = useState(false)
 
-   
-
+     const cartCtx = useContext(CartCtx)
+     console.log('h---',cartCtx)
+        
     return(
         <>
        
@@ -30,12 +31,12 @@ const Header = () =>{
 
         </Nav>
         <Nav className="ml-auto">
-          <NavLink to="cart">
           
-            <Button  onClick={() => setShowCart(!showCart)} className="border">cart</Button>
-            <Badge pill variant="danger" className={styles.count}>{0}</Badge>
-           
-            </NavLink>
+            <Nav.Item>
+            <Button  onClick={() => cartCtx.handleShowCart(true)} className="border">cart</Button>
+            <Badge pill variant="danger" className={styles.count}>{cartCtx.totalItem}</Badge>
+            </Nav.Item>
+         
         </Nav>
       </Container>
     </Navbar>
@@ -43,7 +44,7 @@ const Header = () =>{
      <header className={styles.header}>
         <h1 >My Mart</h1>
       </header>
-         {showCart && <Cart />}
+         {cartCtx.showCart && <Cart />}
         </>
     )
 }

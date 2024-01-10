@@ -28,7 +28,7 @@ const Cart = () =>{
         <>
          <div className={styles.cartPage}>
             <div className={styles.closeBtn}>
-           <CloseButton />
+           <CloseButton onClick={() => cartCtx.handleShowCart(false)}/>
            </div>
             <h3 className='text-center mb-4'>Cart</h3>
              <Table responsive>
