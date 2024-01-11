@@ -1,14 +1,16 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import './Product.css'
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState, useEffect, useCallback } from "react"
 import CartContext from "../Store/Cart-auth"
 
 const Product = () =>{
   const [products,setProducts] = useState([])
   const [loading,setLoading] = useState(true)
- async function fetchProduct(){
+  const [error,setError] = useState(null)
+
+const fetchProduct= useCallback(async () => {
     try{
-  let response = await  fetch('https://fakestoreapi.com/products')
+  let response = await  fetch('https://fakestoreapi.com/produc')
    let data    = await response.json()
      let transformedItems = data.map((product) => {
          return {
@@ -20,16 +22,16 @@ const Product = () =>{
      })
      setProducts(transformedItems)
     }catch(err){
-        throw new Error(err)
+      setError(err.message)
     }finally{
       setLoading(false);
     }
-   
- }
+   setLoading(false)
+ },[])
       useEffect(()=>{
           fetchProduct()
-      },[])
-    
+      },[fetchProduct])
+ 
     const cartCtx = useContext(CartContext)
     const handleAdd = (event,item)=>{
         event.preventDefault()
@@ -58,8 +60,11 @@ const Product = () =>{
 
     return(
         <>
-        {loading && <h3>Loading...........</h3>}
-        {!loading && printProduct()}
+     
+        {!loading && products.length > 0 && printProduct()}
+        {!loading && error &&<h5>{error}</h5>}
+          {loading && <h5>Loading.....</h5>}
+       
         </>
     )
 }
