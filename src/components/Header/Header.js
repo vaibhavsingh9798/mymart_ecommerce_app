@@ -2,7 +2,7 @@ import { Container, Nav, Navbar , Badge, Button} from "react-bootstrap";
 import  styles from './Header.module.css'
 import { useContext, useState } from "react";
 import Cart from "../Cart/Cart";
-import {NavLink} from "react-router-dom";
+import {NavLink } from "react-router-dom";
 import CartCtx from "../Store/Cart-auth"
 const Header = () =>{
         const [showCart,setShowCart] = useState(false)
@@ -18,15 +18,17 @@ const Header = () =>{
         <Nav className="mx-auto">
           
           <Navbar className="m-3 text-white">
-          <NavLink to="/home" className="fs-5 ">HOME</NavLink>
+          <NavLink  to="/home" className={styles.active} >HOME</NavLink>
           </Navbar>
           <Navbar className="m-3">
-          <NavLink to="/store" className="fs-5 ">STORE</NavLink>
+          <NavLink to="/store"  className={styles.active}>STORE</NavLink>
           </Navbar>
           <Navbar className="m-3">
-          <NavLink to="/about" className="fs-5 ">ABOUT</NavLink>
+          <NavLink to="/about"  className={styles.active}>ABOUT</NavLink>
           </Navbar>
-
+          <Navbar className="m-3">
+          <NavLink to="/contact-us"  className={styles.active}>CONTACT Us</NavLink>
+          </Navbar>
      
 
         </Nav>

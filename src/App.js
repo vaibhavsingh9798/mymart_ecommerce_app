@@ -8,6 +8,7 @@ import CartContextProvider from './components/Store/CartContextProvide';
 import { Route, Routes} from 'react-router-dom'
 import Home from './components/Home/Home';
 import About from './components/About/About';
+import ContactUs from './components/ConatctUs/ConatctUs';
 
 function App() {
   
@@ -32,6 +33,7 @@ function App() {
               <Route path="/home" element= {<Home /> }/>
               <Route path="/about" element= {<About />}/>
               <Route path="/store" element= {<Product/>}/>
+              <Route path="/contact-us" element= {<ContactUs />} />
             </Routes>
          
         </Col>

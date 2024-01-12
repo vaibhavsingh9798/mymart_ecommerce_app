@@ -116,7 +116,7 @@ const fetchProduct = useCallback(async () => {
                         <Form.Control type="number" name='price' value={customProduct.price} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value})} />
                         <Form.Label>Image URL</Form.Label>
                         <Form.Control type="text" name='image' value={customProduct.image} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value})} />
-                        <Row className="justify-content-center">
+                        <Row >
                         <Col md={6}>
                        <button onClick={handleSubmit} className="btn btn-primary mt-4">Submit</button>
                        </Col>
