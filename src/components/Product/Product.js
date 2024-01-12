@@ -19,8 +19,9 @@ const fetchProduct = useCallback(async () => {
     let items = []
     for(let key in data){
       let item = {
+        id: key,
         title: data[key].title,
-        price: data[key].price,
+        price: parseInt( data[key].price ),
         image: data[key].image
       }
        items.push(item)
@@ -45,8 +46,23 @@ const fetchProduct = useCallback(async () => {
         cartCtx.addToCart(item)
        
     }
+
+    const handleDelete = (event,item) =>{
+      event.preventDefault()
+      console.log('item....',item)
+      const id = item.id
+      try{
+      fetch(`${url}/products/${id}.json`,{
+        method:'DELETE'
+      })
+      fetchProduct()
+    }catch(err){
+      setError(err.message)
+    }
+    }
+
         const printProduct = ()=>{
-           return ( <Container className="products" style={{ width: '60%' }}>
+           return ( <Container className="products" style={{ width: '80%' }}>
                 <Row className="justify-content-center">
                     <h3 className="fw-bold text-center mt-4">Product</h3>
                 {products.map((product,ind) =>  (
@@ -56,7 +72,8 @@ const fetchProduct = useCallback(async () => {
                       <img src={product.image} alt={product.title} style={{ width: '100px', height: '100px' }}/>
                          <Row className=" mt-4">
                         <Col> <p>Rs {product.price}</p></Col>
-                        <Col><Button onClick={(event) => handleAddToCart(event,product)} className="w-10">Add to Cart</Button></Col>
+                        <Col><Button onClick={(event) => handleAddToCart(event,product)} className="w-5">Add to Cart</Button></Col>
+                        <Col><Button onClick={(event) => handleDelete(event,product)} className="w-5" variant="danger">Delete</Button></Col>
                        </Row>
                     </div>
                     </Col>
@@ -77,9 +94,11 @@ const fetchProduct = useCallback(async () => {
 
               const data = await response.json()
               console.log('response data ..',data)
+              fetchProduct()
             }catch(err){
               setError(err.message)
             }
+            setCustomProduct({title:'',price:0,image:''})
            }
     
  
@@ -99,7 +118,7 @@ const fetchProduct = useCallback(async () => {
                         <Form.Control type="text" name='image' value={customProduct.image} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value})} />
                         <Row className="justify-content-center">
                         <Col md={6}>
-                       <button onClick={handleSubmit} className="btn btn-primary">Submit</button>
+                       <button onClick={handleSubmit} className="btn btn-primary mt-4">Submit</button>
                        </Col>
                        </Row>
                     </Form>
