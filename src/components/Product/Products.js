@@ -1,9 +1,10 @@
 import { Button, Col, Container, Row ,Form} from "react-bootstrap"
-import './Product.css'
+import './Products.css'
 import { useContext, useState, useEffect, useCallback } from "react"
 import CartContext from "../Store/Cart-auth"
+import { NavLink } from "react-router-dom"
 
-const Product = () =>{
+const Products = () =>{
   const [products,setProducts] = useState([])
   const [loading,setLoading] = useState(true)
   const [error,setError] = useState(null)
@@ -67,16 +68,19 @@ const fetchProduct = useCallback(async () => {
                     <h3 className="fw-bold text-center mt-4">Product</h3>
                 {products.map((product,ind) =>  (
                     <Col key={ind} sm={6} md={6} lg={6}   className="text-center mt-5" >
-                    <div className="product-card">
+                    {/* <div className="product-card"> */}
+                    <NavLink to={`/products/${product.id}`}>
                       <h5>{product.title}</h5>
                       <img src={product.image} alt={product.title} style={{ width: '100px', height: '100px' }}/>
+                      </NavLink>
                          <Row className=" mt-4">
                         <Col> <p>Rs {product.price}</p></Col>
                         <Col><Button onClick={(event) => handleAddToCart(event,product)} className="w-5">Add to Cart</Button></Col>
                         <Col><Button onClick={(event) => handleDelete(event,product)} className="w-5" variant="danger">Delete</Button></Col>
                        </Row>
-                    </div>
+                    {/* </div> */}
                     </Col>
+                 
                 ))}
              </Row>
              </Container>)
@@ -140,4 +144,4 @@ const fetchProduct = useCallback(async () => {
     )
 }
 
-export default Product; 
+export default Products; 

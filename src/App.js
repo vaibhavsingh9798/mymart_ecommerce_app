@@ -2,13 +2,14 @@
 import { Container, Row, Col} from 'react-bootstrap';
 import './App.css';
 import Header from './components/Header/Header';
-import Product from './components/Product/Product';
+import Products from './components/Product/Products';
 import Footer from './components/Footer/Footer';
 import CartContextProvider from './components/Store/CartContextProvide';
-import { Route, Routes} from 'react-router-dom'
+import { Route, Routes, Navigate} from 'react-router-dom'
 import Home from './components/Home/Home';
 import About from './components/About/About';
 import ContactUs from './components/ConatctUs/ConatctUs';
+import Product from './pages/Product';
 
 function App() {
   
@@ -29,10 +30,11 @@ function App() {
         <Col>
          
             <Routes>
-            <Route path="/" exact element= {<Product /> }/>
+            <Route path="/" element={<Navigate to="/products"  replace />}  />
               <Route path="/home" element= {<Home /> }/>
               <Route path="/about" element= {<About />}/>
-              <Route path="/store" element= {<Product/>}/>
+              <Route  exact path="/products" element= {<Products/>} />
+                 <Route exact path="/products/:productId" element= {<Product/>} /> 
               <Route path="/contact-us" element= {<ContactUs />} />
             </Routes>
          
