@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import {Container,Form,Button,Row,Col} from 'react-bootstrap'; 
-import {NavLink}  from 'react-router-dom'
+import CartContext from '../Store/Cart-auth';
 const AuthForm = () => {
 const API_KEY = 'AIzaSyCyYc54w-rkp4LUY1keG0h7wOfbOKrQeaM'
 const URL_SIGNUP = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`
@@ -10,16 +10,21 @@ const [formData, setFormData] = useState({email:'',password:''})
 const [isSingup, setIsSingnup] = useState(false)
 const [isLoading, setIsLoading] =  useState(false)
 const [error,setError] = useState('')
+
+const cartCtx = useContext(CartContext)
+
     const handleChange = (e) =>{
        let {name,value} = e.target;
        setFormData({...formData,[name]:value})
        setError(null)
+      
     }
 
     const handleClick = (e) =>{
         e.preventDefault()
         setIsSingnup(!isSingup)
         setError(null)
+        
     }
 
     const handleSubmit = async (e) =>{
@@ -63,6 +68,8 @@ const [error,setError] = useState('')
         let data = await response.json()
         if(response.ok){
           console.log('data..',data)
+          localStorage.setItem('token',JSON.stringify(data.idToken))
+          cartCtx.handleLogin()
         }else{
             let errorMsg = data.error.message ||  'Authentication failed!'  ;
             throw new Error(errorMsg)
@@ -79,7 +86,7 @@ const [error,setError] = useState('')
         setIsLoading(false)
    
     }
-//setIsLoading(false)
+
     const form = () =>{
         return(
             <Container className="mt-5 text-center bg-info">

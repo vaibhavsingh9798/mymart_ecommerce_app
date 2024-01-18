@@ -7,6 +7,7 @@ const CartContextProvider = (props) =>{
     const [totalAmount,setTotalAmount] = useState(0)
     const [totalItem,setTotalItem] = useState(0)
     const [showCart,setShowCart] = useState(false)
+    const [isLogin,setIsLogin] = useState(false)
      
     const addCartItem = (itemInfo) =>{
       let data = {...itemInfo}
@@ -30,9 +31,14 @@ const CartContextProvider = (props) =>{
       setShowCart(val)
     }
 
+    function handleLogin(){
+      setIsLogin(!isLogin)
+    }
+
     return(
         <>
-        <CartContext.Provider value={{addToCart:addCartItem,cartItem:cartItem,totalAmount:totalAmount,totalItem:totalItem,handleShowCart:handleShowCart,showCart:showCart}}>
+        <CartContext.Provider value={{addToCart:addCartItem,cartItem:cartItem,totalAmount:totalAmount,
+          totalItem:totalItem,handleShowCart:handleShowCart,showCart:showCart,isLogin:isLogin,handleLogin:handleLogin}}>
         {props.children} 
         </CartContext.Provider>
         </>

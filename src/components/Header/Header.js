@@ -36,7 +36,7 @@ const Header = () =>{
         <Nav>
         <Nav.Item className={styles.login}>
           <Link to="/auth">
-          <Button variant="info" size="lg">Login</Button>
+          <Button variant="info" size="lg">{cartCtx.isLogin ? 'Logout' : 'Login'}</Button>
           </Link>
         </Nav.Item>
             <Nav.Item>
