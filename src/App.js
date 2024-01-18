@@ -10,6 +10,7 @@ import Home from './components/Home/Home';
 import About from './components/About/About';
 import ContactUs from './components/ConatctUs/ConatctUs';
 import Product from './pages/Product';
+import AuthForm from './components/Auth/AuthForm';
 
 function App() {
   
@@ -28,7 +29,7 @@ function App() {
     <main>
       <Row className="justify-content-center">
         <Col>
-         
+            
             <Routes>
             <Route path="/" element={<Navigate to="/products"  replace />}  />
               <Route path="/home" element= {<Home /> }/>
@@ -36,6 +37,7 @@ function App() {
               <Route  exact path="/products" element= {<Products/>} />
                  <Route exact path="/products/:productId" element= {<Product/>} /> 
               <Route path="/contact-us" element= {<ContactUs />} />
+              <Route path="/auth" element={<AuthForm />} />
             </Routes>
          
         </Col>

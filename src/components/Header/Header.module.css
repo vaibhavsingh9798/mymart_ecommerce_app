@@ -18,16 +18,25 @@
   font-size: 1rem;
 }
 
-.active {
+.heading {
 text-decoration: none;
 font-size: x-large;
 color: aliceblue;
+ &:hover,
+ &:active{
+  font-weight: 600;
+ }
 }
 
-.active:active {
-  font-weight: 600;
-
+.login{
+  margin-right: 3rem;
+  text-decoration: none;
+  &:hover,
+  &:active{
+   color: brown;
   }
+};
+
 
 
 
