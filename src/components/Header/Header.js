@@ -3,45 +3,59 @@ import  styles from './Header.module.css'
 import { useContext, useState } from "react";
 import Cart from "../Cart/Cart";
 import {Link, NavLink } from "react-router-dom";
-import CartCtx from "../Store/Cart-auth"
+import MartCtx from "../Store/mymart-auth"
 const Header = () =>{
         const [showCart,setShowCart] = useState(false)
 
-     const cartCtx = useContext(CartCtx)
-     console.log('h---',cartCtx)
-        
+     const martCtx = useContext(MartCtx)
+
+     function handleLogin(){
+        if(martCtx.isLogin){
+          console.log(martCtx)
+        martCtx.handleLogin()
+        martCtx.handleToken(null)
+        }
+        else{
+          console.log(martCtx)
+        }
+     }
+    
     return(
         <>
        
        <Navbar bg="info" text="red" variant="dark" expand="lg" fixed="top" fluid >
        <Container>
+     
         <Nav className="mx-auto">
-          
+        
           <Navbar className="m-3 text-white">
-          <NavLink  to="/home" className={styles.heading} >HOME</NavLink>
+          { martCtx.isLogin &&   <NavLink  to="/home" className={styles.heading} >HOME</NavLink> }
           </Navbar>
           <Navbar className="m-3">
-          <NavLink to="/products"  className={styles.heading}>STORE</NavLink>
+          { martCtx.isLogin &&  <NavLink to="/products"  className={styles.heading}>STORE</NavLink> }
           </Navbar>
           <Navbar className="m-3">
-          <NavLink to="/about"  className={styles.heading}>ABOUT</NavLink>
+          { martCtx.isLogin &&  <NavLink to="/about"  className={styles.heading}>ABOUT</NavLink> }
           </Navbar>
           <Navbar className="m-3">
-          <NavLink to="/contact-us"  className={styles.heading}>CONTACT Us</NavLink>
+          { martCtx.isLogin &&   <NavLink to="/contact-us"  className={styles.heading}>CONTACT Us</NavLink> }
           </Navbar>
      
-
+        
         </Nav>
       
         <Nav>
         <Nav.Item className={styles.login}>
-          <Link to="/auth">
-          <Button variant="info" size="lg">{cartCtx.isLogin ? 'Logout' : 'Login'}</Button>
+         
+          <Link to={`/auth`}>
+          <Button variant="info" size="lg" onClick={handleLogin}>{martCtx.isLogin ? 'Logout' : 'Login'}</Button>
           </Link>
         </Nav.Item>
             <Nav.Item>
-            <Button variant="info" size="lg" onClick={() => cartCtx.handleShowCart(true)} className="border">cart</Button>
-            <Badge pill variant="danger" className={styles.count}>{cartCtx.totalItem}</Badge>
+            
+            { martCtx.isLogin &&     <Button variant="info" size="lg" onClick={() => martCtx.handleShowCart(true)} className="border">cart</Button> }
+            { martCtx.isLogin &&  <Badge pill variant="danger" className={styles.count}>{martCtx.totalItem}</Badge> }
+            
             </Nav.Item>
          
         </Nav>
@@ -51,7 +65,7 @@ const Header = () =>{
      <header className={styles.header}>
         <h1 >My Mart</h1>
       </header>
-         {cartCtx.showCart && <Cart />}
+         {martCtx.showCart && <Cart />}
         </>
     )
 }

@@ -1,9 +1,9 @@
 import {  Button, CloseButton,   Table } from 'react-bootstrap';
 import styles from './Cart.module.css'
 import { useContext } from 'react';
-import CartContext from '../Store/Cart-auth';
+import MartContext from '../Store/mymart-auth';
 const Cart = () =>{
-   let cartCtx =  useContext(CartContext)
+   let cartCtx =  useContext(MartContext)
         
     return(
         <>

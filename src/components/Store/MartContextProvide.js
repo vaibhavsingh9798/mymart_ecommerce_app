@@ -1,14 +1,15 @@
 import { useState } from "react";
-import CartContext from "./Cart-auth";
+import MartContext from "./mymart-auth";
 
-const CartContextProvider = (props) =>{
+const MartContextProvider = (props) =>{
 
     const [cartItem,setCartItem] = useState([])
     const [totalAmount,setTotalAmount] = useState(0)
     const [totalItem,setTotalItem] = useState(0)
     const [showCart,setShowCart] = useState(false)
     const [isLogin,setIsLogin] = useState(false)
-     
+     const [token,setToken] = useState()
+
     const addCartItem = (itemInfo) =>{
       let data = {...itemInfo}
         let existItem = cartItem.find((item,ind) => item.title == itemInfo.title)
@@ -34,14 +35,17 @@ const CartContextProvider = (props) =>{
     function handleLogin(){
       setIsLogin(!isLogin)
     }
-
+   function handleToken(token){
+     setToken(token)
+   }
     return(
         <>
-        <CartContext.Provider value={{addToCart:addCartItem,cartItem:cartItem,totalAmount:totalAmount,
-          totalItem:totalItem,handleShowCart:handleShowCart,showCart:showCart,isLogin:isLogin,handleLogin:handleLogin}}>
+        <MartContext.Provider value={{addToCart:addCartItem,cartItem:cartItem,totalAmount:totalAmount,
+          totalItem:totalItem,handleShowCart:handleShowCart,showCart:showCart,isLogin:isLogin,handleLogin:handleLogin,
+          token:token,handleToken:handleToken}}>
         {props.children} 
-        </CartContext.Provider>
+        </MartContext.Provider>
         </>
     )
 }
-export default CartContextProvider;
+export default MartContextProvider;

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import {Container,Form,Button,Row,Col} from 'react-bootstrap'; 
-import CartContext from '../Store/Cart-auth';
+import MartContext from '../Store/mymart-auth';
 const AuthForm = () => {
 const API_KEY = 'AIzaSyCyYc54w-rkp4LUY1keG0h7wOfbOKrQeaM'
 const URL_SIGNUP = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`
@@ -11,7 +11,7 @@ const [isSingup, setIsSingnup] = useState(false)
 const [isLoading, setIsLoading] =  useState(false)
 const [error,setError] = useState('')
 
-const cartCtx = useContext(CartContext)
+const cartCtx = useContext(MartContext)
 
     const handleChange = (e) =>{
        let {name,value} = e.target;
@@ -68,7 +68,7 @@ const cartCtx = useContext(CartContext)
         let data = await response.json()
         if(response.ok){
           console.log('data..',data)
-          localStorage.setItem('token',JSON.stringify(data.idToken))
+          cartCtx.handleToken(data.idToken)
           cartCtx.handleLogin()
         }else{
             let errorMsg = data.error.message ||  'Authentication failed!'  ;

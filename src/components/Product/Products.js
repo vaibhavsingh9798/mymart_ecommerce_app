@@ -1,7 +1,7 @@
 import { Button, Col, Container, Row ,Form} from "react-bootstrap"
 import './Products.css'
 import { useContext, useState, useEffect, useCallback } from "react"
-import CartContext from "../Store/Cart-auth"
+import MartContext from "../Store/mymart-auth"
 import { NavLink } from "react-router-dom"
 
 const Products = () =>{
@@ -40,7 +40,7 @@ const fetchProduct = useCallback(async () => {
           fetchProduct()
       },[fetchProduct])
  
-    const cartCtx = useContext(CartContext)
+    const cartCtx = useContext(MartContext)
 
     const handleAddToCart = (event,item)=>{
         event.preventDefault()

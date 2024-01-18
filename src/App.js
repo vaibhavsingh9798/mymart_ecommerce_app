@@ -4,7 +4,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Products from './components/Product/Products';
 import Footer from './components/Footer/Footer';
-import CartContextProvider from './components/Store/CartContextProvide';
+import MartContextProvider from './components/Store/MartContextProvide';
 import { Route, Routes, Navigate} from 'react-router-dom'
 import Home from './components/Home/Home';
 import About from './components/About/About';
@@ -15,7 +15,7 @@ import AuthForm from './components/Auth/AuthForm';
 function App() {
   
   return (
-  <CartContextProvider>
+  <MartContextProvider>
     <Container fluid>
     <header>
       <Row>
@@ -38,6 +38,7 @@ function App() {
                  <Route exact path="/products/:productId" element= {<Product/>} /> 
               <Route path="/contact-us" element= {<ContactUs />} />
               <Route path="/auth" element={<AuthForm />} />
+             
             </Routes>
          
         </Col>
@@ -52,7 +53,7 @@ function App() {
       </Row>
     </footer>
   </Container>
-  </CartContextProvider>
+  </MartContextProvider>
   );
 }
 
