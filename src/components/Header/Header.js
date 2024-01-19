@@ -46,7 +46,11 @@ const Header = () =>{
       
         <Nav>
         <Nav.Item className={styles.login}>
-         
+       { martCtx.isLogin &&  <Link to='/profile'>
+         <Button variant="info" size="lg" >Profile</Button>
+         </Link> }
+       </Nav.Item>
+        <Nav.Item className={styles.login}>
           <Link to={`/auth`}>
           <Button variant="info" size="lg" onClick={handleLogin}>{martCtx.isLogin ? 'Logout' : 'Login'}</Button>
           </Link>

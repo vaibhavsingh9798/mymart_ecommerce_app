@@ -11,6 +11,7 @@ import About from './components/About/About';
 import ContactUs from './components/ConatctUs/ConatctUs';
 import Product from './pages/Product';
 import AuthForm from './components/Auth/AuthForm';
+import Profile from './pages/Profile';
 
 function App() {
   
@@ -31,14 +32,14 @@ function App() {
         <Col>
             
             <Routes>
-            <Route path="/" element={<Navigate to="/products"  replace />}  />
+            <Route path="/" element={<Navigate to="/auth"  replace />}  />
               <Route path="/home" element= {<Home /> }/>
               <Route path="/about" element= {<About />}/>
               <Route  exact path="/products" element= {<Products/>} />
                  <Route exact path="/products/:productId" element= {<Product/>} /> 
               <Route path="/contact-us" element= {<ContactUs />} />
               <Route path="/auth" element={<AuthForm />} />
-             
+              <Route path="/profile" element={<Profile />} />
             </Routes>
          
         </Col>
