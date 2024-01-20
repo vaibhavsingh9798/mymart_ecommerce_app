@@ -13,13 +13,27 @@ import Product from './pages/Product';
 import AuthForm from './components/Auth/AuthForm';
 import Profile from './components/Profile/Profile';
 import AddProduct from './components/Product/AddProduct';
-import { useContext } from 'react';
+import { useContext , useEffect} from 'react';
 import MartContext from './components/Store/mymart-auth';
 
 function App() {
   const martCtx = useContext(MartContext)
   let isLogin = martCtx.isLogin || !!(localStorage.getItem('token'))
   console.log('app ctx',isLogin,martCtx )
+
+  const idealeTime = 5 * 60 * 1000;
+
+useEffect(()=>{
+  isLogin = martCtx.isLogin;
+  if(isLogin){
+ let timeoutId =  setTimeout(()=>{
+  alert('logout!')
+    localStorage.removeItem('token')
+    window.location.reload()
+  },IdleDeadline)
+ return () => { clearTimeout(timeoutId)}
+}
+},[martCtx.isLogin])
 
   return (
   <MartContextProvider>
