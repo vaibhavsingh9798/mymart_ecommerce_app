@@ -1,38 +1,42 @@
 import { useContext, useState } from 'react'
 import {Container,Form,Button,Row,Col} from  'react-bootstrap'
-import MartContext from '../components/Store/mymart-auth'
+import {useNavigate} from 'react-router-dom'
+import MartContext from '../Store/mymart-auth'
 const Profile  = () => {
  const [password,setPassword] = useState('')
  const API_KEY = 'AIzaSyCyYc54w-rkp4LUY1keG0h7wOfbOKrQeaM'
 const URL_RESET = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`
 
  const martCtx =  useContext(MartContext)
- 
- const handleSubmit = async () =>{
+ const token = localStorage.getItem('token')
+ const navigate = useNavigate()
+
+ const handleSubmit = async (e) =>{
+    e.preventDefault()
     console.log('password',password)
    try{
   let response = await fetch(URL_RESET,{
     method:'POST',
     body: JSON.stringify({
         password : password,
-        idToken: martCtx.token,
-        returnSecureToken : true
+        idToken: token,
+        returnSecureToken : true,
         
     }),
     headers:{
         'Content-Type':'application/json'
     }
   })
-  console.log('response--',response)
+
   let data = await response.json()
    if(response.ok){
-    console.log('data',data)
-    martCtx.handleToken(data.idToken)
+    localStorage.setItem('token',data.idToken)
+    navigate('/auth')
    }else{
-    console.log('error',response)
+     alert('something wrong')
    }
    }catch(err){
-    console.log('err',err)
+    alert(err.message)
    }
  }
     const form = () => {

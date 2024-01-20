@@ -11,10 +11,16 @@ import About from './components/About/About';
 import ContactUs from './components/ConatctUs/ConatctUs';
 import Product from './pages/Product';
 import AuthForm from './components/Auth/AuthForm';
-import Profile from './pages/Profile';
+import Profile from './components/Profile/Profile';
+import AddProduct from './components/Product/AddProduct';
+import { useContext } from 'react';
+import MartContext from './components/Store/mymart-auth';
 
 function App() {
-  
+  const martCtx = useContext(MartContext)
+  let isLogin = martCtx.isLogin || !!(localStorage.getItem('token'))
+  console.log('app ctx',isLogin,martCtx )
+
   return (
   <MartContextProvider>
     <Container fluid>
@@ -32,14 +38,15 @@ function App() {
         <Col>
             
             <Routes>
-            <Route path="/" element={<Navigate to="/auth"  replace />}  />
-              <Route path="/home" element= {<Home /> }/>
-              <Route path="/about" element= {<About />}/>
-              <Route  exact path="/products" element= {<Products/>} />
-                 <Route exact path="/products/:productId" element= {<Product/>} /> 
-              <Route path="/contact-us" element= {<ContactUs />} />
+            <Route exact path="/" element={<Navigate to="/auth"  />}  />
+             <Route path="/home" element= {isLogin ? <Home /> : <Navigate to="/auth"   /> }/> 
+              <Route path="/about" element= {isLogin ? <About /> : <Navigate to="/auth"  />}/>
+                <Route  exact path="/products" element= {isLogin ? <Products/> : <Navigate to="/auth"  />} />
+                 <Route exact path="/products/:productId" element= {isLogin ? <Product/> : <Navigate to="/auth"   />} /> 
+                   <Route  exact path="/products/add-product" element= {isLogin ? <AddProduct /> : <Navigate to="/auth"   />} />
+                  <Route path="/contact-us" element= {isLogin ? <ContactUs /> : <Navigate to="/auth"   />} />
               <Route path="/auth" element={<AuthForm />} />
-              <Route path="/profile" element={<Profile />} />
+                 <Route path="/profile" element={isLogin ? <Profile /> : <Navigate to="/auth"   />} />
             </Routes>
          
         </Col>

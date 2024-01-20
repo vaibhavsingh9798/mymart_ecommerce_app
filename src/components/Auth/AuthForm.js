@@ -1,7 +1,9 @@
 import { useContext, useState } from 'react'
 import {Container,Form,Button,Row,Col} from 'react-bootstrap'; 
 import MartContext from '../Store/mymart-auth';
+import { useNavigate} from 'react-router-dom'
 const AuthForm = () => {
+  
 const API_KEY = 'AIzaSyCyYc54w-rkp4LUY1keG0h7wOfbOKrQeaM'
 const URL_SIGNUP = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`
 const URL_SIGNIN = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`
@@ -11,7 +13,8 @@ const [isSingup, setIsSingnup] = useState(false)
 const [isLoading, setIsLoading] =  useState(false)
 const [error,setError] = useState('')
 
-const cartCtx = useContext(MartContext)
+const martCtx = useContext(MartContext)
+const navigate = useNavigate()
 
     const handleChange = (e) =>{
        let {name,value} = e.target;
@@ -65,11 +68,10 @@ const cartCtx = useContext(MartContext)
                 'Content-Type':'application/json'
             }
         })
-        let data = await response.json()
-        if(response.ok){
-          console.log('data..',data)
-          cartCtx.handleToken(data.idToken)
-          cartCtx.handleLogin()
+        let data = await response.json() 
+        if(response.ok && data){
+          martCtx.handleLogin(data.idToken)
+          navigate('/products')
         }else{
             let errorMsg = data.error.message ||  'Authentication failed!'  ;
             throw new Error(errorMsg)

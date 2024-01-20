@@ -8,9 +8,9 @@ const Products = () =>{
   const [products,setProducts] = useState([])
   const [loading,setLoading] = useState(true)
   const [error,setError] = useState(null)
-  const [customProduct,setCustomProduct] = useState({title:'',price:0,image:''})
+
   
-  const url = 'https://react-mymart-default-rtdb.firebaseio.com/'
+  const url = 'https://react-mymart-default-rtdb.firebaseio.com'
 const fetchProduct = useCallback(async () => {
     try{
   let response = await  fetch(`${url}/products.json`)
@@ -78,58 +78,21 @@ const fetchProduct = useCallback(async () => {
                         <Col><Button onClick={(event) => handleAddToCart(event,product)} className="w-5">Add to Cart</Button></Col>
                         <Col><Button onClick={(event) => handleDelete(event,product)} className="w-5" variant="danger">Delete</Button></Col>
                        </Row>
-                    {/* </div> */}
+                      
                     </Col>
-                 
+                   
                 ))}
-             </Row>
-             </Container>)
-        }
-
-        const  handleSubmit = async (e) =>{
-               e.preventDefault()
-              console.log('hs',customProduct)
-              try{
-              const response = await fetch(`${url}/products.json`,{
-                method:"POST",
-                body:JSON.stringify(customProduct),
-                headers : {'Content-Type' : 'application/json'}
-              })
-
-              const data = await response.json()
-              console.log('response data ..',data)
-              fetchProduct()
-            }catch(err){
-              setError(err.message)
-            }
-            setCustomProduct({title:'',price:0,image:''})
-           }
-    
- 
-        const addProduct = () =>{
-            return (
-                <Container className="justify-content-md-center mt-4">
-                <Row className="justify-content-md-center">
-                     <h3 className="fw-bold text-center mt-4">Add Product</h3>
-                  <Col md={6}>
-                    <Form>
+                   
+                      
                   
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" name='title' value={customProduct.title} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value}) }/>
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="number" name='price' value={customProduct.price} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value})} />
-                        <Form.Label>Image URL</Form.Label>
-                        <Form.Control type="text" name='image' value={customProduct.image} onChange={(e) => setCustomProduct({...customProduct,[e.target.name]:e.target.value})} />
-                        <Row >
-                        <Col md={6}>
-                       <button onClick={handleSubmit} className="btn btn-primary mt-4">Submit</button>
-                       </Col>
-                       </Row>
-                    </Form>
-                  </Col>
-                </Row>
-              </Container>
-            )
+             </Row>
+             <Row >
+             <NavLink to="/products/add-product" className='addProduct'>
+                   <h4 className="mt-5">   Add More Product </h4> 
+                        </NavLink>
+                        </Row>
+            
+             </Container>)
         }
 
        
@@ -139,7 +102,7 @@ const fetchProduct = useCallback(async () => {
         {!loading && products.length > 0 && printProduct()}
         {!loading && error &&<h5>{error}</h5>}
           {loading && <h5>Loading.....</h5>}
-          {addProduct()}
+          
         </>
     )
 }

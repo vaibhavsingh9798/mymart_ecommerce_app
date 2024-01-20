@@ -2,13 +2,16 @@ import { useState } from "react";
 import MartContext from "./mymart-auth";
 
 const MartContextProvider = (props) =>{
-
+   
+    let initialIsLogin = localStorage.getItem('token')
+    console.log('store in token',initialIsLogin)
     const [cartItem,setCartItem] = useState([])
     const [totalAmount,setTotalAmount] = useState(0)
     const [totalItem,setTotalItem] = useState(0)
     const [showCart,setShowCart] = useState(false)
-    const [isLogin,setIsLogin] = useState(false)
-     const [token,setToken] = useState()
+    const [token,setToken] = useState(initialIsLogin)
+    const [isLogin,setIsLogin] = useState(initialIsLogin)
+   
 
     const addCartItem = (itemInfo) =>{
       let data = {...itemInfo}
@@ -32,17 +35,23 @@ const MartContextProvider = (props) =>{
       setShowCart(val)
     }
 
-    function handleLogin(){
-      setIsLogin(!isLogin)
+    function handleLogin(token){
+      setToken(token)
+      setIsLogin(true)
+        localStorage.setItem('token',token)
     }
-   function handleToken(token){
-     setToken(token)
-   }
+
+    function hanleLogout(){
+      setToken(null)
+      setIsLogin(false)
+        localStorage.removeItem('token')
+    }
+ 
     return(
         <>
         <MartContext.Provider value={{addToCart:addCartItem,cartItem:cartItem,totalAmount:totalAmount,
           totalItem:totalItem,handleShowCart:handleShowCart,showCart:showCart,isLogin:isLogin,handleLogin:handleLogin,
-          token:token,handleToken:handleToken}}>
+          handleLogout:hanleLogout }}>
         {props.children} 
         </MartContext.Provider>
         </>
