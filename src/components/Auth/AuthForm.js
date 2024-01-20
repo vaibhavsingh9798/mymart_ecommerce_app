@@ -85,7 +85,7 @@ const navigate = useNavigate()
         setError(err.message)
     }
         
-      
+        localStorage.setItem('email',JSON.stringify(formData.email))
         setFormData({email:'',password:''})
         setIsLoading(false)
    

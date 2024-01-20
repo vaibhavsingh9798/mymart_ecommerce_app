@@ -1,10 +1,28 @@
 import {  Button, CloseButton,   Table } from 'react-bootstrap';
 import styles from './Cart.module.css'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import MartContext from '../Store/mymart-auth';
 const Cart = () =>{
+  let email = JSON.parse(localStorage.getItem('email'))
+  email = email.replace('@','').replace('.','')
+  const URL = `https://crudcrud.com/api/46d3f64448544138b8d73c9e037d49b3/${email}`
+
    let cartCtx =  useContext(MartContext)
-        
+        let items =  cartCtx.cartItem
+
+      const fethItems = async () =>{
+        try{
+        let response = await fetch(URL)
+        let data = await response.json()
+        console.log('cart fetch',data)
+        }catch(err){
+          console.error(err.message)
+        }
+      }
+        useEffect(()=>{
+         fethItems()
+        },[])
+
     return(
         <>
          <div className={styles.cartPage}>
@@ -22,7 +40,7 @@ const Cart = () =>{
                </thead>
                <tbody>
                {
-                cartCtx.cartItem.map((item,ind)=>(
+               items.map((item,ind)=>(
                   <tr key={ind} className='text-center'>
                     <td>{item.title}</td>
                     <td>{item.price}</td>
