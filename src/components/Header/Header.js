@@ -1,14 +1,18 @@
 import { Container, Nav, Navbar , Badge, Button} from "react-bootstrap";
 import  styles from './Header.module.css'
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cart from "../Cart/Cart";
 import {Link, NavLink , useNavigate} from "react-router-dom";
 import MartCtx from "../Store/mymart-auth"
 const Header = () =>{
   const [showCart,setShowCart] = useState(false)
   const martCtx = useContext(MartCtx)
- let isLogin = martCtx.isLogin
-     const navigate = useNavigate()
+   let isLogin = martCtx.isLogin
+   const navigate = useNavigate()
+
+   let email = localStorage.getItem('email') 
+   email = email.replace('@','').replace('.','')
+   const URL = `https://react-mymart-default-rtdb.firebaseio.com/${email}.json`
 
      function handleLogout(e){
       e.preventDefault();
@@ -19,6 +23,53 @@ const Header = () =>{
         }
         
      }
+
+    
+
+
+     const  fetchCartItems = async () =>{
+      try{
+      let response = await fetch(`${URL}`)
+      let data = await response.json()
+      let count = 0;
+      let totalAmount = 0;
+      if(response.ok){
+        let cartData = []
+      for(let key in data ){
+        count++;
+    
+        let item = {
+          id : key,
+          cartItemId: data[key].id,
+          title: data[key].title,
+          price: parseInt( data[key].price ),
+          image: data[key].image
+        }
+        let existItem = cartData.find(cartItem => cartItem.title == item.title)
+        if(existItem){
+          existItem.quantity += 1
+        }else{
+          item.quantity = 1
+          cartData.push(item)
+        }
+        if(item.price)
+         totalAmount += parseInt(item.price) 
+      }
+      martCtx.setCart(cartData)
+      martCtx.setTotalItem(count)
+      martCtx.setTotalAmount(totalAmount)
+    }
+      }catch(error){
+        console.error(error)
+      }
+
+     }
+
+     useEffect(()=>{
+      if(isLogin){
+      fetchCartItems()
+      }
+     },[martCtx.isLoading])
     
     return(
         <>

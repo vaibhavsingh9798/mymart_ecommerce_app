@@ -9,7 +9,6 @@ const Product = () =>{
        try{
        let response = await fetch(`${url}/products/${productId}.json`)
        let data = await response.json()
-          console.log('data------',data)
          setProduct(data)
        }catch(err){
         console.error(err.message)

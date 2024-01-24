@@ -19,21 +19,18 @@ import MartContext from './components/Store/mymart-auth';
 function App() {
   const martCtx = useContext(MartContext)
   let isLogin = martCtx.isLogin || !!(localStorage.getItem('token'))
-  console.log('app ctx',isLogin,martCtx )
-
+ 
   const idealeTime = 5 * 60 * 1000;
 
 useEffect(()=>{
-  isLogin = martCtx.isLogin;
-  if(isLogin){
- let timeoutId =  setTimeout(()=>{
-  alert('logout!')
-    localStorage.removeItem('token')
-    window.location.reload()
-  },IdleDeadline)
- return () => { clearTimeout(timeoutId)}
-}
-},[martCtx.isLogin])
+  let timeOutId
+    if(timeOutId)
+    clearTimeout(timeOutId)
+ timeOutId = setTimeout(()=>{
+   localStorage.removeItem('token')
+   window.location.href= '/auth'
+},[idealeTime])
+},[])
 
   return (
   <MartContextProvider>
@@ -68,7 +65,7 @@ useEffect(()=>{
     </main>
     
     <footer>
-      <Row>
+      <Row >
         <Col>
           <Footer />
         </Col>

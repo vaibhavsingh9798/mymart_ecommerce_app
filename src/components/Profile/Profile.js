@@ -13,7 +13,6 @@ const URL_RESET = `https://identitytoolkit.googleapis.com/v1/accounts:update?key
 
  const handleSubmit = async (e) =>{
     e.preventDefault()
-    console.log('password',password)
    try{
   let response = await fetch(URL_RESET,{
     method:'POST',
@@ -31,6 +30,7 @@ const URL_RESET = `https://identitytoolkit.googleapis.com/v1/accounts:update?key
   let data = await response.json()
    if(response.ok){
     localStorage.setItem('token',data.idToken)
+    alert('Password reset successful')
     navigate('/auth')
    }else{
      alert('something wrong')
@@ -44,7 +44,7 @@ const URL_RESET = `https://identitytoolkit.googleapis.com/v1/accounts:update?key
             <Container className="mt-5 text-center">
             <Row className="justify-content-md-center">
               <Col xs={12} md={6}>
-                <h2 className="mb-4 mt-3">Your user profile</h2>
+                <h2 className="mb-4 mt-3">Password Reset </h2>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formPassword">
                     <Form.Label className='mt-3' column='lg'>New Password</Form.Label>

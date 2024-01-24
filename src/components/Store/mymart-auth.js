@@ -2,10 +2,9 @@ import { createContext } from "react";
 
 
 const MartContext = createContext({
-    addCartItem:()=>{},cartItem:[],totalAmount:0,totalItem:0,
-    handleShowCart:()=>{},showCart:false,isLogin:false,handleLogin:()=>{},handleLogout:()=>{}
-    
-})
+addCartItem:()=>{},cartItem:[],setCart:()=>{},totalItem:0,setTotalItem:()=>{},
+setTotalAmount:()=>{},totalAmount:0,isLoading:false,handleShowCart:()=>{},
+showCart:false,isLogin:false,handleLogin:()=>{},handleLogout:()=>{} })
   
 
 export default MartContext;

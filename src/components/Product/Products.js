@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row ,Form} from "react-bootstrap"
+import { Button, Col, Container, Row } from "react-bootstrap"
 import './Products.css'
 import { useContext, useState, useEffect, useCallback } from "react"
 import MartContext from "../Store/mymart-auth"
@@ -9,14 +9,18 @@ const Products = () =>{
   const [loading,setLoading] = useState(true)
   const [error,setError] = useState(null)
 
+  let URL = 'https://react-mymart-default-rtdb.firebaseio.com'
+
+ 
+  let email = localStorage.getItem('email') 
+  email = email.replace('@','').replace('.','')
   
-  const url = 'https://react-mymart-default-rtdb.firebaseio.com'
+ 
 const fetchProduct = useCallback(async () => {
     try{
-  let response = await  fetch(`${url}/products.json`)
+  let response = await  fetch(`${URL}/products.json`)
    let data    = await response.json()
    if(!data) throw new Error('Data Not Found !');
-   console.log('data...',data)
     let items = []
     for(let key in data){
       let item = {
@@ -42,21 +46,37 @@ const fetchProduct = useCallback(async () => {
  
     const cartCtx = useContext(MartContext)
 
-    const handleAddToCart = (event,item)=>{
+    const handleAddToCart = async (event,item) =>{
         event.preventDefault()
         cartCtx.addToCart(item)
-       
     }
 
-    const handleDelete = (event,item) =>{
+    const handleDelete = async (event,item) =>{
       event.preventDefault()
-      console.log('item....',item)
-      const id = item.id
+       const itemId = item.id
+       const itemTitle = item.title; 
       try{
-      fetch(`${url}/products/${id}.json`,{
+
+   let response =  await  fetch(`${URL}/products/${itemId}.json`,{
         method:'DELETE'
       })
+      if(response.ok){
+        let response = await fetch(`${URL}/${email}.json`)
+        let data = await response.json()
+       
+         let selectedItem = []
+         for(let key in data){
+           if(data[key].title === itemTitle)
+           selectedItem.push(key)
+         }
+          selectedItem.map(async (id) => {
+            await fetch(`${URL}/${email}/${id}.json`,{
+              method:'DELETE'
+            })
+           })
+    
       fetchProduct()
+  }
     }catch(err){
       setError(err.message)
     }
@@ -82,9 +102,7 @@ const fetchProduct = useCallback(async () => {
                     </Col>
                    
                 ))}
-                   
-                      
-                  
+                       
              </Row>
              <Row >
              <NavLink to="/products/add-product" className='addProduct'>

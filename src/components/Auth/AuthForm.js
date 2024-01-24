@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect, useCallback } from 'react'
 import {Container,Form,Button,Row,Col} from 'react-bootstrap'; 
 import MartContext from '../Store/mymart-auth';
 import { useNavigate} from 'react-router-dom'
@@ -17,7 +17,6 @@ const martCtx = useContext(MartContext)
 const navigate = useNavigate()
 
 
-
     const handleChange = (e) =>{
        let {name,value} = e.target;
        setFormData({...formData,[name]:value})
@@ -32,7 +31,7 @@ const navigate = useNavigate()
         
     }
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit =  async (e) => {
         e.preventDefault()
         setIsLoading(true)
           try{
@@ -51,7 +50,6 @@ const navigate = useNavigate()
         })
         let data = await response.json()
         if(response.ok){
-        console.log('successfull signup',data)
         setIsSingnup(!isSingup)
         setError(null)
         }else{
@@ -72,8 +70,11 @@ const navigate = useNavigate()
         })
         let data = await response.json() 
         if(response.ok && data){
-          martCtx.handleLogin(data.idToken)
+          martCtx.handleLogin(data.idToken, formData.email)
           navigate('/products')
+            window.location.reload()
+          alert('Login successful!')
+          
         }else{
             let errorMsg = data.error.message ||  'Authentication failed!'  ;
             throw new Error(errorMsg)
@@ -89,7 +90,7 @@ const navigate = useNavigate()
         setFormData({email:'',password:''})
         setIsLoading(false)
    
-    }
+    } 
 
     const form = () =>{
         return(

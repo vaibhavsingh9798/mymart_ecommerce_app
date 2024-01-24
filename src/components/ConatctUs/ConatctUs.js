@@ -1,29 +1,39 @@
 import { useState } from "react"
 import {Col, Row, Container, Form} from 'react-bootstrap'
-import Styles from './ContactUs.module.css'
+
 const ContactUs = () =>{
 
  const [userInfo,setUserInfo] = useState({name:'',email:'',number:0})
- const url = ""
- let response = ''
+ const [error,setError] = useState('')
+ const url = 'https://react-mymart-default-rtdb.firebaseio.com'
+ let result = ''
     const  handleSubmit = async (e) =>{
         e.preventDefault()
+        setError('')
+        if(userInfo.name && userInfo.email && userInfo.number){
        try{
-       const response = await fetch(`${url}/products.json`,{
+        
+       const response = await fetch(`${url}/contact.json`,{
          method:"POST",
          body:JSON.stringify(userInfo),
          headers : {'Content-Type' : 'application/json'}
        })
+       if(response.ok){
+        setError('')
+        alert('successful')
+       }
+      else
+      throw new Error('something wrong!')
      }catch(err){
-       throw new Error(err.message)
-     }finally{
-       response = 'successfully submited.'
+      setError(err.message)
      }
-
+    }else{
+      setError('something wrong!')
+    }
      setUserInfo({name:'',email:'',number:0})
+    
     }
 
- // className="justify-content-md-center mt-4"
  const contact = () =>{
      return (
           <Container >
@@ -42,6 +52,7 @@ const ContactUs = () =>{
                  <Col md={6}>
                 <button onClick={handleSubmit} className="btn btn-primary mt-4 ml-5">Submit</button>
                 </Col>
+               
                 </Row>
              </Form>
            </Col>
@@ -54,7 +65,7 @@ const ContactUs = () =>{
     return(
         <>
            {contact()}
-           {response && response}
+           {error && <h5>{error}</h5>}
         </>
     )
 }
